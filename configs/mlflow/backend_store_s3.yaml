@@ -1,0 +1,2 @@
+tracking_uri: file:///mlruns  # Local directory for tracking
+artifact_uri: s3://your-marketing-bucket/artifacts/  # S3 for model storage only

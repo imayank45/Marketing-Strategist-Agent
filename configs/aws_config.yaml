@@ -1,0 +1,3 @@
+s3_bucket: marketing-strategist-agent-bucket
+region: eu-north-1
+iam_role: arn:aws:s3:::marketing-strategist-agent-bucket
