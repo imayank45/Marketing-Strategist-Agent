@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/781913625487512885/5a09f8f7bcfa497db93050c9b2bf3256/artifacts
+end_time: 1758304603112
+entry_point_name: ''
+experiment_id: '781913625487512885'
+lifecycle_stage: active
+run_id: 5a09f8f7bcfa497db93050c9b2bf3256
+run_name: vaunted-crane-401
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758304603029
+status: 3
+tags: []
+user_id: Mayank

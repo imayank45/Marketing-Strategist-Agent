@@ -1,0 +1,22 @@
+artifact_path: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/893425950340860787/models/m-4662429e2565452085ea31fa7dd7e3db/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.18
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.4.0
+model_id: m-4662429e2565452085ea31fa7dd7e3db
+model_size_bytes: 46579938
+model_uuid: m-4662429e2565452085ea31fa7dd7e3db
+prompts: null
+run_id: 89d5f0b195ce437f853fc003349652c2
+utc_time_created: '2025-09-19 17:05:16.016785'

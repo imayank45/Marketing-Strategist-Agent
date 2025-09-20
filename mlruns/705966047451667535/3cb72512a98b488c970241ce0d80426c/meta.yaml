@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/705966047451667535/3cb72512a98b488c970241ce0d80426c/artifacts
+end_time: 1758301703039
+entry_point_name: ''
+experiment_id: '705966047451667535'
+lifecycle_stage: active
+run_id: 3cb72512a98b488c970241ce0d80426c
+run_name: chill-lynx-249
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758301690998
+status: 3
+tags: []
+user_id: Mayank

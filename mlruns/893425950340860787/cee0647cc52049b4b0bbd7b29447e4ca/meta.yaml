@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/893425950340860787/cee0647cc52049b4b0bbd7b29447e4ca/artifacts
+end_time: 1758301717219
+entry_point_name: ''
+experiment_id: '893425950340860787'
+lifecycle_stage: active
+run_id: cee0647cc52049b4b0bbd7b29447e4ca
+run_name: crawling-conch-37
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758301710355
+status: 3
+tags: []
+user_id: Mayank

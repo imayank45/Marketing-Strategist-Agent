@@ -1,0 +1,21 @@
+artifact_path: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/705966047451667535/models/m-9d416d47dc9544759c32e8bd03a2b0a8/artifacts
+flavors:
+  prophet:
+    code: null
+    data: model.pr
+    model_type: Prophet
+    prophet_version: 1.1.7
+  python_function:
+    data: model.pr
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.prophet
+    python_version: 3.10.18
+mlflow_version: 3.4.0
+model_id: m-9d416d47dc9544759c32e8bd03a2b0a8
+model_size_bytes: 3252
+model_uuid: m-9d416d47dc9544759c32e8bd03a2b0a8
+prompts: null
+run_id: df7a8655dcb64df991b02b6e02b13750
+utc_time_created: '2025-09-19 17:04:55.247813'

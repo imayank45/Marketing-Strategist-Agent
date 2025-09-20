@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/705966047451667535/08087341f9f84773b174fc41cec5b901/artifacts
+end_time: 1758281480433
+entry_point_name: ''
+experiment_id: '705966047451667535'
+lifecycle_stage: active
+run_id: 08087341f9f84773b174fc41cec5b901
+run_name: puzzled-mole-226
+run_uuid: 08087341f9f84773b174fc41cec5b901
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758281475602
+status: 3
+tags: []
+user_id: Mayank

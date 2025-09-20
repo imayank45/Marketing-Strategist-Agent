@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/893425950340860787/1017d15dd52b4d7ca759363198965141/artifacts
+end_time: 1758281283686
+entry_point_name: ''
+experiment_id: '893425950340860787'
+lifecycle_stage: active
+run_id: 1017d15dd52b4d7ca759363198965141
+run_name: thundering-whale-532
+run_uuid: 1017d15dd52b4d7ca759363198965141
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758281277153
+status: 3
+tags: []
+user_id: Mayank

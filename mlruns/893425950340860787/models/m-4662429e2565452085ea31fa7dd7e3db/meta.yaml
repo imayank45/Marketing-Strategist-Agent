@@ -1,0 +1,10 @@
+artifact_location: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/893425950340860787/models/m-4662429e2565452085ea31fa7dd7e3db/artifacts
+creation_timestamp: 1758301515928
+experiment_id: '893425950340860787'
+last_updated_timestamp: 1758301523945
+model_id: m-4662429e2565452085ea31fa7dd7e3db
+model_type: null
+name: rf_strategy_model
+source_run_id: 89d5f0b195ce437f853fc003349652c2
+status: 2
+status_message: null

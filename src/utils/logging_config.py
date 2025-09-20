@@ -1,24 +1,31 @@
 """Centralized logging configuration."""
 import logging
+from logging.handlers import RotatingFileHandler
+import os
 
-# Configure logging once
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(filename)s-%(funcName)s:%(lineno)d - %(message)s",
-    handlers=[
-        logging.FileHandler('logs/app.log'),
-        logging.StreamHandler()
-    ]
-)
-
-# Create a function to get logger instance
-def get_logger(name):
-    """Get logger instance for a module.
+def setup_logging(log_file='logs/app.log', level=logging.INFO):
+    """Configure logging with file and console output.
     
     Args:
-        name (str): Module name (e.g., __name__).
+        log_file (str): Path to log file.
+        level (int): Logging level (e.g., logging.INFO).
         
     Returns:
         logging.Logger: Configured logger.
+        
+    Raises:
+        IOError: If log file cannot be created.
     """
-    return logging.getLogger(name)
+    logger = logging.getLogger(__name__)
+    if not logger.handlers:  # Avoid duplicate handlers
+        logger.setLevel(level)
+        formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+        os.makedirs(os.path.dirname(log_file) or '.', exist_ok=True)
+        file_handler = RotatingFileHandler(log_file, maxBytes=10**6, backupCount=5)
+        file_handler.setFormatter(formatter)
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+        logger.info(f"Logging initialized to {log_file}")
+    return logger

@@ -1,9 +1,8 @@
 """Configuration loader for project params."""
 import yaml
-import logging
+from src.utils.logging_config import setup_logging
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = setup_logging()
 
 def load_config(file_path='configs/params.yaml'):
     """Load YAML config file.

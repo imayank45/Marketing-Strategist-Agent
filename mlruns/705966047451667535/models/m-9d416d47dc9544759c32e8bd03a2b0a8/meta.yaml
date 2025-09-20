@@ -1,0 +1,10 @@
+artifact_location: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns/705966047451667535/models/m-9d416d47dc9544759c32e8bd03a2b0a8/artifacts
+creation_timestamp: 1758301495168
+experiment_id: '705966047451667535'
+last_updated_timestamp: 1758301509088
+model_id: m-9d416d47dc9544759c32e8bd03a2b0a8
+model_type: null
+name: prophet_model
+source_run_id: df7a8655dcb64df991b02b6e02b13750
+status: 2
+status_message: null
