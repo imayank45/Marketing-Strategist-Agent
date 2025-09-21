@@ -125,4 +125,4 @@ class StrategyAgent:
             return output
         except Exception as e:
             logger.error(f"Strategy generation error: {e}", exc_info=True)
-            raise ValueError("Strategy generation failed")
+            raise ValueError("Strategy generation failed") 
