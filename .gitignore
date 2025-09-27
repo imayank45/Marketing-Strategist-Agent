@@ -206,3 +206,71 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 /secrets.txt
+
+marketing-strategist-agent/
+# -------------------
+# Python
+# -------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.pickle
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+marketing-strategist-agent/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# -------------------
+# Project specific
+# -------------------
+# Logs
+logs/
+*.log
+
+# MLflow runs
+mlruns/
+
+# DVC cache & files
+.dvc/
+*.dvc
+
+# Data files
+data/
+*.csv
+*.tsv
+*.parquet
+*.json
+
+# Models
+models/
+*.h5
+*.pt
+*.onnx
+*.joblib
+*.pkl
+
+# Deployment / build artifacts
+deployment/docker/*.server
+*.egg-info/
+dist/
+build/
+
+# -------------------
+# Secrets
+# -------------------
+/secrets.txt
+*.env
+
+# -------------------
+# OS/System files
+# -------------------
+.DS_Store
+Thumbs.db

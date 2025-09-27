@@ -17,4 +17,3 @@ langchain-experimental
 langchain-text-splitters
 langsmith
 pydantic
-langchain-groq
