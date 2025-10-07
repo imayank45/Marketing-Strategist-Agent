@@ -2,28 +2,30 @@
 from src.data.ingest_pipeline import ingest_pipeline
 from src.models.train.train_forecaster import train_forecaster
 from src.models.train.train_strategy_model import train_strategy_model
-from src.utils.logging_config import setup_logging
+import logging
 import mlflow
 
-logger = setup_logging()
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 if __name__ == "__main__":
     try:
         logger.info("Starting full training pipeline")
-        logger.debug("Running ingest pipeline")
-        ingest_pipeline('data/raw/bank.csv')
-        logger.debug("Running forecaster training")
+        
+        # Ingest data
+        df = ingest_pipeline('data/raw/bank.csv')
+        
+        # Train forecaster
         forecaster = train_forecaster()
-        logger.debug("Running strategy model training")
+        
+        # Train strategy model
         strategy_model = train_strategy_model()
+        
         logger.info("Full pipeline complete")
-
-        # Verify MLflow runs
-        runs = mlflow.search_runs()
-        if runs.empty:
-            logger.warning("No MLflow runs found")
-        else:
-            logger.info(f"MLflow runs found: {len(runs)}")
     except Exception as e:
         logger.error(f"Pipeline failed: {e}", exc_info=True)
         raise
+    finally:
+        # Clean up MLflow run context
+        mlflow.end_run()  # Ensure no active run lingers
+        logger.debug("MLflow run context cleaned up")

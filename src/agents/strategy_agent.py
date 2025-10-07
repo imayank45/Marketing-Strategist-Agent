@@ -1,6 +1,6 @@
 """Strategy Agent using CrewAI and models."""
 from crewai import Agent, Task, Crew
-from langchain_openai import ChatOpenAI  # OpenAI LLM object for CrewAI
+from langchain_openai import ChatOpenAI
 from src.models.predict.predict_strategy import predict_strategy
 from src.models.predict.predict_forecast import predict_forecast
 from src.utils.logging_config import setup_logging
@@ -9,7 +9,7 @@ import logging
 import joblib
 import mlflow
 import os
-from typing import Dict
+from typing import Dict, Optional
 
 logger = setup_logging()
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -31,14 +31,10 @@ class StrategyAgent:
             self.strategy_model = joblib.load('models/rf_strategy_model.pkl')
             logger.debug("RF model loaded successfully")
 
-            # Dynamically find Prophet model from latest run
-            runs = mlflow.search_runs(filter_string="params.model = 'Prophet'")
-            if runs.empty:
-                raise FileNotFoundError("No Prophet model run found in MLflow")
-            latest_run = runs.sort_values("start_time", ascending=False).iloc[0]
-            self.artifact_path = f"runs:/{latest_run['run_id']}/prophet_model"
-            self.forecaster = mlflow.prophet.load_model(self.artifact_path)
-            logger.debug(f"Prophet model loaded from {self.artifact_path}")
+            # Initialize Prophet model path (hardcoded based on latest run)
+            self.artifact_path = "mlruns/1/artifacts/prophet_model"  # Update to correct run ID
+            self.forecaster = None  # Load on demand
+            logger.debug(f"Prophet model path set to {self.artifact_path}")
 
             # Create OpenAI LLM object (required for CrewAI)
             openai_key = os.getenv("OPENAI_API_KEY")
@@ -56,6 +52,24 @@ class StrategyAgent:
             logger.error(f"Init error: {e}", exc_info=True)
             raise
 
+    def _load_forecaster(self) -> Optional[object]:
+        """Load Prophet model dynamically when needed.
+        
+        Returns:
+            Prophet: Loaded model, or None if loading fails.
+        
+        Notes:
+            Uses a hardcoded path to avoid search_runs() issues.
+        """
+        if self.forecaster is None:
+            try:
+                self.forecaster = mlflow.prophet.load_model(self.artifact_path)
+                logger.debug(f"Prophet model loaded from {self.artifact_path}")
+            except Exception as e:
+                logger.warning(f"Failed to load Prophet model from {self.artifact_path}: {e}. Proceeding without trend data.")
+                self.forecaster = None
+        return self.forecaster
+
     def generate_strategy(self, **kwargs) -> Dict:
         """Generate strategy with predictions, aligned with Bank Marketing dataset.
         
@@ -63,7 +77,7 @@ class StrategyAgent:
             **kwargs: Dataset features (e.g., age=30, job='admin.', marital='single', duration=500, campaign=1, contact='cellular', month='may', budget=10000, and defaults like education='university.degree').
         
         Returns:
-            dict: {'success_prob': float, 'trend': float, 'strategy': str, 'allocation': dict}.
+            dict: {'success_prob': float, 'trend': float or None, 'strategy': str, 'allocation': dict}.
         
         Raises:
             ValueError: If generation fails.
@@ -94,12 +108,18 @@ class StrategyAgent:
                 'nr.employed': kwargs.get('nr.employed', 5191),
                 'budget': kwargs.get('budget', 10000)  # For allocation, not RF
             }
-            success_prob = predict_strategy(features)  # Pass full features dict to RF
+            success_prob = predict_strategy(features)
             logger.debug(f"Success probability: {success_prob}")
 
-            forecast = predict_forecast(self.artifact_path, periods=kwargs.get('duration', 30))
-            future_trend = forecast['yhat'].tail(4).mean()
-            logger.debug(f"Future trend: {future_trend}")
+            # Load forecaster with hardcoded path
+            forecaster = self._load_forecaster()
+            future_trend = None
+            if forecaster:
+                forecast = predict_forecast(self.artifact_path, periods=kwargs.get('duration', 30))
+                future_trend = forecast['yhat'].tail(4).mean()
+                logger.debug(f"Future trend: {future_trend}")
+            else:
+                logger.warning("No trend data available due to Prophet load failure")
 
             # Agent with backstory and OpenAI LLM object
             agent = Agent(
@@ -108,7 +128,7 @@ class StrategyAgent:
                 backstory='Expert in bank marketing campaigns, using age/job/marital/duration/campaign/contact/month to predict subscription success and allocate budgets.',
                 llm=self.llm
             )
-            task_desc = f"Age: {features['age']}, Job: {features['job']}, Marital: {features['marital']}, Duration: {features['duration']}s, Campaign: {features['campaign']}, Contact: {features['contact']}, Month: {features['month']}, Budget: {features['budget']}. Success prob: {success_prob:.2f}, Trend: {future_trend:.0f}."
+            task_desc = f"Age: {features['age']}, Job: {features['job']}, Marital: {features['marital']}, Duration: {features['duration']}s, Campaign: {features['campaign']}, Contact: {features['contact']}, Month: {features['month']}, Budget: {features['budget']}. Success prob: {success_prob:.2f}, Trend: {future_trend or 'N/A'}."
             task = Task(
                 description=task_desc,
                 agent=agent,
@@ -125,4 +145,4 @@ class StrategyAgent:
             return output
         except Exception as e:
             logger.error(f"Strategy generation error: {e}", exc_info=True)
-            raise ValueError("Strategy generation failed") 
+            raise ValueError("Strategy generation failed")

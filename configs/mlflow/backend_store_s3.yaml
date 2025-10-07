@@ -1,2 +1,2 @@
-tracking_uri: file:///C:/ds_projects/Marketing-Strategist-Agent/mlruns  # Windows absolute path
+tracking_uri: file:///app/mlruns
 artifact_uri: s3://your-marketing-bucket/artifacts/  # S3 for model storage

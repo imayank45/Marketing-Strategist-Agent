@@ -172,12 +172,13 @@
                     const result = await response.json();
 
                     if (response.ok) {
-                        let strategyDisplay = typeof result.strategy === 'object' ? JSON.stringify(result.strategy, null, 2) : result.strategy;
-                        let allocationDisplay = typeof result.allocation === 'object' ? JSON.stringify(result.allocation, null, 2) : result.allocation;
+                        let trendDisplay = result.trend ? result.trend.toFixed(0) : 'N/A';
+                        let strategyDisplay = JSON.stringify(result.strategy, null, 2);
+                        let allocationDisplay = JSON.stringify(result.allocation, null, 2);
                         resultsDiv.innerHTML = `
                             <div class="success p-4 rounded-md">
                                 <h3 class="font-bold text-xl mb-2">Success Probability: ${(result.success_prob * 100).toFixed(1)}%</h3>
-                                <p class="mb-2"><strong>Trend:</strong> ${result.trend.toFixed(0)} subscriptions</p>
+                                <p class="mb-2"><strong>Trend:</strong> ${trendDisplay} subscriptions</p>
                                 <p class="mb-2"><strong>Strategy:</strong> <pre class="strategy-text bg-gray-100 p-4 rounded-md text-gray-800">${strategyDisplay}</pre></p>
                                 <p class="mb-2"><strong>Budget Allocation:</strong> <pre class="strategy-text bg-gray-100 p-4 rounded-md text-gray-800">${allocationDisplay}</pre></p>
                             </div>
@@ -190,5 +191,6 @@
                 }
             });
         </script>
-    </body>
+    </div>
+</body>
 </html>

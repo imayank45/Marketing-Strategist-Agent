@@ -2,6 +2,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware  # Add CORS
 from src.agents.strategy_agent import StrategyAgent
 import mlflow
 from src.utils.mlflow_utils import setup_mlflow
@@ -16,10 +17,24 @@ agent = StrategyAgent()
 templates = Jinja2Templates(directory="templates")
 setup_mlflow("StrategyAPI")
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all for testing; restrict to your domain in prod
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow GET, POST, etc.
+    allow_headers=["*"],
+)
+
 @app.get("/")
 def root():
     """Root endpoint for health check."""
     return {"message": "Marketing Strategist Agent API is running! Visit /strategy for UI."}
+
+@app.get("/health")
+def health():
+    """Health check for ELB/Kubernetes."""
+    return {"status": "healthy"}
 
 @app.get("/strategy")
 def strategy_form(request: Request):
