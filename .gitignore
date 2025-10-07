@@ -227,6 +227,8 @@ venv/
 env/
 ENV/
 marketing-strategist-agent/
+deployment/
+deployment/k8s/
 
 # Jupyter notebook checkpoints
 .ipynb_checkpoints/
