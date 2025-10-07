@@ -281,3 +281,6 @@ build/
 Thumbs.db
 
 data/
+
+# Ignore Kubernetes deployment files
+deployment/k8s/
