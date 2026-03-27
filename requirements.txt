@@ -10,7 +10,7 @@ boto3==1.35.4
 joblib==1.4.2
 crewai==0.51.1
 langchain==0.2.6
-langchain-core==0.2.10
+langchain-core==1.2.22
 langchain-community==0.2.5
 langchain-openai==0.1.7
 langchain-experimental==0.0.61
